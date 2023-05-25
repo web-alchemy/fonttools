@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+'use strict'
+
+const { main  } = require('../index.js')
+
+process.title = '@web-alchemy/fonttools/subset'
+main()

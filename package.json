@@ -1,0 +1,40 @@
+{
+  "name": "@web-alchemy/fonttools",
+  "version": "0.0.1",
+  "main": "index.js",
+  "bin": {
+    "subset": "./bin/subset"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "scripts": {
+    "postpublish": "git push origin --all; git push origin --tags",
+    "postversion": "npm publish",
+    "preversion": "npm test",
+    "test": "echo \"No test specified\" && exit 0"
+  },
+  "dependencies": {
+    "pyodide": "^0.23.2"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/web-alchemy/fonttools.git"
+  },
+  "keywords": [
+    "fonttools",
+    "fonts",
+    "subset",
+    "pyodide",
+    "optimization",
+    "woff2"
+  ],
+  "bugs": {
+    "url": "https://github.com/web-alchemy/fonttools/issues"
+  },
+  "homepage": "https://github.com/web-alchemy/fonttools"
+}
