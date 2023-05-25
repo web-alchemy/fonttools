@@ -6,6 +6,7 @@ const { loadPyodide } = require('pyodide')
  * @typedef {Object} SubsetFontOptions
  * @property {string} input-file
  * @property {string} output-file
+ * @property {'woff' | 'woff2'} [flavor]
  * @property {string} [text]
  * @property {string} [unicodes]
  * @property {boolean} [desubroutinize = false]

@@ -3,11 +3,13 @@ from fontTools.subset import Subsetter, parse_unicodes
 
 def subset_font(settings):
   options = subset.Options()
-  options.flavor = 'woff2'
+
   options.ignore_missing_glyphs = True
   options.ignore_missing_unicodes = True
   options.desubroutinize = settings['desubroutinize']
   options.hinting = not settings['no-hinting']
+  if ('flavor' in settings):
+    options.flavor = settings['flavor']
 
   font = subset.load_font('./input-file', options)
 
