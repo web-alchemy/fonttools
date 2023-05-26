@@ -1,6 +1,43 @@
 const fs = require('node:fs')
 const path = require('node:path')
-const { loadPyodide } = require('pyodide')
+const crypto = require('node:crypto')
+const { preparePyodide } = require('./preparePyodide.js')
+
+const pythonSource = fs.readFileSync(path.join(__dirname, 'subset.py'), 'utf-8')
+
+async function subsetFontFromBuffer(inputFontBuffer, options) {
+  const pyodide = await preparePyodide()
+
+  const TEMP_INPUT_FONT_FILE = `./${crypto.randomUUID()}`
+  const TEMP_OUTPUT_FONT_FILE = `./${crypto.randomUUID()}`
+
+  pyodide.FS.writeFile(TEMP_INPUT_FONT_FILE, inputFontBuffer)
+
+  const subset_font = pyodide.runPython(pythonSource)
+
+  subset_font(new Map(Object.entries({
+    ...options,
+    ...{
+      'input-file': TEMP_INPUT_FONT_FILE,
+      'output-file': TEMP_OUTPUT_FONT_FILE
+    }
+  })))
+
+  const processedFile = pyodide.FS.readFile(TEMP_OUTPUT_FONT_FILE)
+
+  pyodide.FS.unlink(TEMP_INPUT_FONT_FILE)
+  pyodide.FS.unlink(TEMP_OUTPUT_FONT_FILE)
+
+  return processedFile
+}
+
+function getFilePathWithoutExtension(filePath) {
+  return filePath.slice(0, filePath.lastIndexOf('.'))
+}
+
+function getFilePathExtension(filePath) {
+  return path.extname(filePath)
+}
 
 /**
  * @typedef {Object} SubsetFontOptions
@@ -18,34 +55,28 @@ const { loadPyodide } = require('pyodide')
  * @param {SubsetFontOptions} options
  */
 async function subsetFont(options) {
-  const pyodide = await loadPyodide();
+  if (!options['output-file']) {
+    const originalFileExtension = getFilePathExtension(options['input-file'])
+    const newFileExtension = ['woff', 'woff2'].includes(options['flavor']) ? `.${options['flavor']}` : originalFileExtension
+    options['output-file'] = getFilePathWithoutExtension(options['input-file']) + newFileExtension
+  }
 
-  await Promise.all(
-    ['Brotli', 'fonttools']
-      .map((package) => pyodide.loadPackage(package, {
-        messageCallback: () => {}
-      }))
-  );
+  if (!options['flavor']) {
+    const outputFileExtension = getFilePathExtension(options['output-file']).slice(1)
+    if (['woff', 'woff2'].includes(outputFileExtension)) {
+      options['flavor'] = outputFileExtension
+    }
+  }
 
-  const TEMP_INPUT_FONT_FILE = './input-file'
-  const TEMP_OUTPUT_FONT_FILE = './output-file'
-
-  const fontFile = fs.readFileSync(path.join(process.cwd(), options['input-file']))
-  pyodide.FS.writeFile(TEMP_INPUT_FONT_FILE, fontFile)
-
-  const pythonSource = fs.readFileSync(path.join(__dirname, 'subset.py'), 'utf-8')
-
-  const subset_font = pyodide.runPython(pythonSource)
-
-  subset_font(new Map(Object.entries(options)))
-
-  const proccessedFile = pyodide.FS.readFile(TEMP_OUTPUT_FONT_FILE)
-  const outputFile = path.join(process.cwd(), options['output-file'])
-  const outputFileFolder = path.dirname(outputFile)
-  fs.mkdirSync(outputFileFolder, { recursive: true })
-  fs.writeFileSync(path.join(process.cwd(), options['output-file']), proccessedFile)
+  const inputFileBuffer = await fs.promises.readFile(path.join(process.cwd(), options['input-file']))
+  const outputFileBuffer = await subsetFontFromBuffer(inputFileBuffer, options)
+  const outputFilePath = path.join(process.cwd(), options['output-file'])
+  const outputFileFolder = path.dirname(outputFilePath)
+  await fs.promises.mkdir(outputFileFolder, { recursive: true })
+  await fs.promises.writeFile(path.join(process.cwd(), options['output-file']), outputFileBuffer)
 }
 
 module.exports = {
-  subsetFont
+  subsetFont,
+  subsetFontFromBuffer
 }

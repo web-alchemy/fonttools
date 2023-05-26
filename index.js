@@ -1,15 +1,6 @@
-const path = require('node:path')
 const { parseArgs } = require('node:util')
-const { subsetFont } = require('./subset.js')
+const { subsetFont, subsetFontFromBuffer } = require('./subset.js')
 const { output } = require('./output.js')
-
-function getFilePathWithoutExtension(filePath) {
-  return filePath.slice(0, filePath.lastIndexOf('.'))
-}
-
-function getFilePathExtension(filePath) {
-  return path.extname(filePath)
-}
 
 async function main() {
   const { values: options } = parseArgs({
@@ -27,25 +18,15 @@ async function main() {
     allowPositionals: true
   })
 
-  if (!options['output-file']) {
-    const originalFileExtension = getFilePathExtension(options['input-file'])
-    options['output-file'] = getFilePathWithoutExtension(options['input-file']) + (`.${options['flavor']}` ?? originalFileExtension)
-  }
-
-  if (!options['flavor']) {
-    const outputFileExtension = getFilePathExtension(options['output-file']).slice(1)
-    if (['woff', 'woff2'].includes(outputFileExtension)) {
-      options['flavor'] = outputFileExtension
-    }
-  }
-
   await subsetFont(options)
 
   output(options['input-file'], options['output-file'])
 }
 
 module.exports = {
-  main
+  main,
+  subsetFont,
+  subsetFontFromBuffer
 }
 
 if (require.main === module) {

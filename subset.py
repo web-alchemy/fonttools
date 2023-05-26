@@ -11,7 +11,7 @@ def subset_font(settings):
   if ('flavor' in settings):
     options.flavor = settings['flavor']
 
-  font = subset.load_font('./input-file', options)
+  font = subset.load_font(settings['input-file'], options)
 
   subsetter = Subsetter(options=options)
 
@@ -22,6 +22,6 @@ def subset_font(settings):
     )
     subsetter.subset(font)
 
-  subset.save_font(font, './output-file', options)
+  subset.save_font(font, settings['output-file'], options)
 
 subset_font
