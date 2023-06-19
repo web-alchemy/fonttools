@@ -1,7 +1,7 @@
 const fs = require('node:fs')
 const path = require('node:path')
 const crypto = require('node:crypto')
-const { preparePyodide } = require('./preparePyodide.js')
+const { preparePyodide } = require('./prepare-pyodide.js')
 
 const pythonSource = fs.readFileSync(path.join(__dirname, 'subset.py'), 'utf-8')
 
