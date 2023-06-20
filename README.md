@@ -1,6 +1,6 @@
 # Tool for font subseting
 
-Tool uses [Pyodide](https://pyodide.org) and [Font Tools](github.com/fonttools/fonttools) and support small options set of original [font tools subset CLI](https://fonttools.readthedocs.io/en/latest/subset/index.html).
+Tool uses [Pyodide](https://pyodide.org) and [Font Tools](https://github.com/fonttools/fonttools) and support small options set of original [font tools subset CLI](https://fonttools.readthedocs.io/en/latest/subset/index.html).
 
 ## Usage examples
 
