@@ -1,6 +1,6 @@
 {
   "name": "@web-alchemy/fonttools",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "main": "index.js",
   "bin": {
     "pyftsubset": "./bin/pyftsubset"
@@ -16,7 +16,7 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "pyodide": "^0.23.2"
+    "pyodide": "^0.23.3"
   },
   "publishConfig": {
     "access": "public"
