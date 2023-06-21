@@ -1,4 +1,3 @@
-const crypto = require('node:crypto')
 const { preparePyodide, PyodideFile } = require('./pyodide.js')
 const { getPythonSubsetFunction } = require('./get-python-subset-function.js')
 
