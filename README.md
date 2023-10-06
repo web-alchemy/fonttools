@@ -1,8 +1,8 @@
-# Tool for font subseting
+# Font subseting tool
 
-Tool uses [Python Font Tools](https://github.com/fonttools/fonttools) via [Pyodide](https://pyodide.org).
+The tool uses [Python Font Tools](https://github.com/fonttools/fonttools) via [Pyodide](https://pyodide.org).
 
-## Using as CLI
+## Using as a CLI
 
 Just converting `ttf` to `woff2`:
 
@@ -28,7 +28,7 @@ npx @web-alchemy/fonttools pyftsubset \
   --layout-features="*"
 ```
 
-## Using as module
+## Using as a module
 
 Installation:
 
