@@ -2,6 +2,10 @@
 'use strict'
 
 const { main } = require('../index.js')
+const pkg = require('../package.json')
 
-process.title = '@web-alchemy/fonttools/pyftsubset'
+const title = `${pkg.name}/pyftsubset`
+process.title = title
+console.log(title)
+console.log(pkg.version)
 main()
