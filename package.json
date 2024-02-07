@@ -16,7 +16,7 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "pyodide": "^0.24.1"
+    "pyodide": "^0.25.0"
   },
   "publishConfig": {
     "access": "public"
