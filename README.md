@@ -79,37 +79,6 @@ main()
 
 ## Limitations
 
-- Doesn't support [zopfli](https://pypi.org/project/zopfli/) package for optimizing woff files
-- In CLI all file paths should be relative to `cwd` (current working directory)
+- Doesn't support [zopfli](https://pypi.org/project/zopfli/) package for better optimizing woff files.
+- In CLI all file paths should be relative to `cwd` (current working directory).
 
-## Good stuff about font subseting
-
-- Articles:
-
-  - https://calendar.perfplanet.com/2017/3-tips-for-faster-font-loading
-  - https://markoskon.com/creating-font-subsets
-  - https://www.zachleat.com/web/css-tricks-web-fonts
-  - https://cloudfour.com/thinks/font-subsetting-strategies-content-based-vs-alphabetical
-
-- Another useful tools:
-
-  - [glyphhanger](https://github.com/zachleat/glyphhanger). [Article](https://www.zachleat.com/web/glyphhanger)
-
-- Same tools:
-
-  - [subset-font](https://github.com/papandreou/subset-font)
-  - [foliojs fontkit](https://github.com/foliojs/fontkit). At that moment for PDF only.
-
-- Online services for font subseting:
-
-  - https://transfonter.org
-
-- Service for getting information about fonts:
-
-  - https://wakamaifondue.com
-  - https://fontdrop.info
-
-- Sites with unicode data:
-
-  - https://www.unicode.org/charts
-  - https://jrgraphix.net/r/Unicode
