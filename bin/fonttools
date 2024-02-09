@@ -2,9 +2,9 @@
 'use strict'
 
 const pkg = require('../package.json')
-const { main } = require('../modules/subset/cli.js')
+const { main } = require('../modules/fonttools/cli.js')
 
-const title = `${pkg.name}/pyftsubset`
+const title = `${pkg.name}`
 process.title = title
 console.log(`${title}@${pkg.version}`)
 main()

@@ -1,59 +1,52 @@
 const crypto = require('node:crypto')
-const { loadPyodide: _loadPyodide } = require('pyodide')
+const { loadPyodide } = require('pyodide')
+const { once } = require('./utils.js');
 
-function asyncOnce(func) {
-  let promise
-
-  return function() {
-    if (promise) {
-      return promise
-    }
-
-    promise = func.apply(this, arguments)
-
-    return promise
-  }
+async function installPackages(/**@type {import('pyodide').PyodideInterface}*/ pyodide) {
+  await Promise.all(
+    ['Brotli', 'fonttools']
+      .map((package) => pyodide.loadPackage(package, {
+        messageCallback: () => {}
+      }))
+  );
 }
 
 /**
  * @type {() => Promise<import('pyodide').PyodideInterface>}
  */
-const loadPyodide = asyncOnce(_loadPyodide)
-
-/**
- * @type {() => Promise<import('pyodide').PyodideInterface>}
- */
-const preparePyodide = asyncOnce(
-  async function() {
-    const pyodide = await loadPyodide()
-
-    await Promise.all(
-      ['Brotli', 'fonttools']
-        .map((package) => pyodide.loadPackage(package, {
-          messageCallback: () => { }
-        }))
-    );
-
+const preparePyodide = once(
+  async function(options) {
+    const pyodide = await loadPyodide(options)
+    await installPackages(pyodide)
     return pyodide
   }
 )
 
 class PyodideFile {
-  constructor({ pyodide, filename }) {
-    this.pyodide = pyodide
-    this.filename = filename ?? crypto.randomUUID()
+  static of(options) {
+    return new PyodideFile(options)
+  }
+
+  constructor(options) {
+    if (!new.target) {
+      return this.constructor.of(options)
+    }
+
+    this.pyodide = options.pyodide
+    this.id = options.id ?? crypto.randomUUID()
+    this.filename = options.filename ?? this.id
   }
 
   upload(fontBuffer) {
-    return this.pyodide.FS.writeFile(this.filename, fontBuffer)
+    return this.pyodide.FS.writeFile(this.id, fontBuffer)
   }
 
   download() {
-    return this.pyodide.FS.readFile(this.filename)
+    return this.pyodide.FS.readFile(this.id)
   }
 
   delete() {
-    this.pyodide.FS.unlink(this.filename)
+    this.pyodide.FS.unlink(this.id)
   }
 }
 

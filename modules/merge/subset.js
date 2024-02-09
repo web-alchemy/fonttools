@@ -1,5 +1,5 @@
-const { preparePyodide, PyodideFile } = require('./pyodide.js')
-const { getPythonSubsetFunction } = require('./get-python-subset-function.js')
+const { preparePyodide, PyodideFile } = require('../../pyodide.js')
+const { getPythonSubsetFunction } = require('./get-python-merge-function.js')
 
 function prepareOptions(options) {
   return Object.entries(options)
