@@ -1,10 +1,36 @@
-# Font subseting tool
+# Font tools
 
-The tool uses [Python Font Tools](https://github.com/fonttools/fonttools) via [Pyodide](https://pyodide.org).
+This is the Node.js adapter of [python font tools](https://github.com/fonttools/fonttools) via [Pyodide](https://pyodide.org) without having to install python and its dependencies.
+
+Font tools library usually used for optimizing fonts – subseting, format converting, deleting of unused variable font axes, etc.
 
 ## Using as a CLI
 
-Just converting `ttf` to `woff2`:
+You can install the library as a global dependency:
+
+```shell
+npm install --global @web-alchemy/fonttools
+```
+
+After installing [font utilities](https://fonttools.readthedocs.io/en/latest/#utilities) will be available globally:
+
+```shell
+fonttools <params>
+pyftsubset <params>
+pyftmerge <params>
+ttx <params>
+```
+
+Also you can use this tool via [npx](https://docs.npmjs.com/cli/commands/npx):
+
+```shell
+npx @web-alchemy/fonttools <params>
+npx @web-alchemy/fonttools pyftsubset <params>
+npx @web-alchemy/fonttools pyftmerge <params>
+npx @web-alchemy/fonttools ttx <params>
+```
+
+Example of converting `ttf` to `woff2`:
 
 ```shell
 npx @web-alchemy/fonttools pyftsubset \
@@ -14,7 +40,7 @@ npx @web-alchemy/fonttools pyftsubset \
   --flavor="woff2"
 ```
 
-Converting `ttf` to `woff2` and subseting with text and unicodes options
+Example of converting `ttf` to `woff2` and subseting with text and unicodes options:
 
 ```shell
 npx @web-alchemy/fonttools pyftsubset \
@@ -28,15 +54,30 @@ npx @web-alchemy/fonttools pyftsubset \
   --layout-features="*"
 ```
 
-## Using as a module
-
-Installation:
+Example of [customizing variable font's axes](https://fonttools.readthedocs.io/en/latest/varLib/instancer.html):
 
 ```shell
-npm install @web-alchemy/fonttools
+npx @web-alchemy/fonttools varLib.instancer \
+  "./src/font.woff2" \
+  # decrease `wght` axis range
+  wght=400:600 \
+  # delete `wdth` axis
+  wdth=drop \ 
+  --output="./dist/font.woff2"
 ```
 
-Just converting `ttf` to `woff2`:
+## Using as a module
+
+Library provides few JavaScript specific methods for fonts optimization:
+
+```javascript
+const {
+  subset,
+  instantiateVariableFont
+} = require('@web-alchemy/fonttools')
+```
+
+Example of converting `ttf` to `woff2`:
 
 ```javascript
 const fs = require('node:fs')
@@ -56,7 +97,7 @@ async function main() {
 main()
 ```
 
-Converting `ttf` to `woff2` and subseting with text and unicodes options
+Example of converting `ttf` to `woff2` and subseting with text and unicodes options:
 
 ```javascript
 const fs = require('node:fs')
@@ -77,8 +118,37 @@ async function main() {
 main()
 ```
 
+Method `subset` takes same params as [original `pyftsubset` utility](https://fonttools.readthedocs.io/en/latest/subset/index.html)(without dashes `--`).
+
+Example of [customizing variable font's axes](https://fonttools.readthedocs.io/en/latest/varLib/instancer.html):
+
+```javascript
+const fs = require('node:fs')
+const { instantiateVariableFont } = require('@web-alchemy/fonttools')
+
+async function main() {
+  const inputFileBuffer = await fs.promises.readFile('./src/font.woff2')
+
+  const outputFileBuffer = await instantiateVariableFont(inputFileBuffer, {
+    wght: [300, 500], // decrease `wght` axis range
+    wdth: null // delete `wdth` axis
+  })
+
+  await fs.promises.writeFile('dist/font.woff2', outputFileBuffer)
+}
+
+main()
+```
+
+This is port of [method `varLib.instancer.instantiateVariableFont`](https://fonttools.readthedocs.io/en/latest/varLib/instancer.html#fontTools.varLib.instancer.instantiateVariableFont)
+
+
 ## Limitations
 
 - Doesn't support [zopfli](https://pypi.org/project/zopfli/) package for better optimizing woff files.
 - In CLI all file paths should be relative to `cwd` (current working directory).
 
+## References
+
+- Python font tools. [Github](https://github.com/fonttools/fonttools), [Site](https://fonttools.readthedocs.io/en/latest/).
+- Pyodide. [Github](https://github.com/pyodide), [Site](https://pyodide.org).
