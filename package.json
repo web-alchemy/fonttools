@@ -1,9 +1,12 @@
 {
   "name": "@web-alchemy/fonttools",
-  "version": "1.0.3",
-  "main": "index.js",
+  "version": "1.1.0",
+  "main": "main.js",
   "bin": {
-    "pyftsubset": "./bin/pyftsubset"
+    "fonttools": "./bin/fonttools",
+    "pyftsubset": "./bin/pyftsubset",
+    "pyftmerge": "./bin/pyftmerge",
+    "ttx": "./bin/ttx"
   },
   "engines": {
     "node": ">=18.0.0",
