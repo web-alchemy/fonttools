@@ -1,14 +1,11 @@
 const crypto = require('node:crypto')
 const { loadPyodide } = require('pyodide')
-const { once } = require('./utils.js');
+const { once } = require('./utils.js')
 
 async function installPackages(/**@type {import('pyodide').PyodideInterface}*/ pyodide) {
-  await Promise.all(
-    ['Brotli', 'fonttools']
-      .map((package) => pyodide.loadPackage(package, {
-        messageCallback: () => {}
-      }))
-  );
+  await pyodide.loadPackage(['Brotli', 'fonttools'], {
+    messageCallback: () => {}
+  })
 }
 
 /**
