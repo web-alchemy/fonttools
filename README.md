@@ -24,16 +24,16 @@ ttx <params>
 Also you can use this tool via [npx](https://docs.npmjs.com/cli/commands/npx):
 
 ```shell
-npx @web-alchemy/fonttools <params>
-npx @web-alchemy/fonttools pyftsubset <params>
-npx @web-alchemy/fonttools pyftmerge <params>
-npx @web-alchemy/fonttools ttx <params>
+npx -p @web-alchemy/fonttools <params>
+npx -p @web-alchemy/fonttools pyftsubset <params>
+npx -p @web-alchemy/fonttools pyftmerge <params>
+npx -p @web-alchemy/fonttools ttx <params>
 ```
 
 Example of converting `ttf` to `woff2`:
 
 ```shell
-npx @web-alchemy/fonttools pyftsubset \
+npx -p @web-alchemy/fonttools pyftsubset \
   "./some/path/to/font.ttf" \
   "*" \  # keep all glyphs and just convert format
   --output-file="./some/path/to/font.woff2" \
@@ -43,7 +43,7 @@ npx @web-alchemy/fonttools pyftsubset \
 Example of converting `ttf` to `woff2` and subseting with text and unicodes options:
 
 ```shell
-npx @web-alchemy/fonttools pyftsubset \
+npx -p @web-alchemy/fonttools pyftsubset \
   "./some/path/to/font.ttf" \
   --output-file="./some/path/to/font.woff2" \
   --flavor="woff2" \
