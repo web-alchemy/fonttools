@@ -1,4 +1,5 @@
 const crypto = require('node:crypto')
+const fs = require('node:fs')
 const { loadPyodide } = require('pyodide')
 const { once } = require('./utils.js')
 
@@ -34,8 +35,11 @@ class PyodideFile {
     this.filename = options.filename ?? this.id
   }
 
-  upload(fontBuffer) {
-    return this.pyodide.FS.writeFile(this.id, fontBuffer)
+  async upload(fontFile = this.filename) {
+    fontFile = (typeof fontFile === 'string' || fontFile instanceof URL)
+      ? await fs.promises.readFile(fontFile)
+      : fontFile
+    return this.pyodide.FS.writeFile(this.id, fontFile)
   }
 
   download() {

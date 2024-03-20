@@ -2,9 +2,9 @@ function getPythonTtxFunction(pyodide) {
   return pyodide.runPythonAsync(`
     from fontTools.ttx import main
 
-    def main_fn():
+    def main_fn(args = None):
       try:
-        return main()
+        return main(args)
       except SystemExit as error:
         return error
       except Exception:

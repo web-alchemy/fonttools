@@ -68,12 +68,13 @@ npx @web-alchemy/fonttools varLib.instancer \
 
 ## Using as a module
 
-Library provides few JavaScript specific methods for fonts optimization:
+Library provides few JavaScript specific methods:
 
 ```javascript
 const {
   subset,
-  instantiateVariableFont
+  instantiateVariableFont,
+  ttx
 } = require('@web-alchemy/fonttools')
 ```
 
@@ -142,6 +143,56 @@ main()
 
 This is port of [method `varLib.instancer.instantiateVariableFont`](https://fonttools.readthedocs.io/en/latest/varLib/instancer.html#fontTools.varLib.instancer.instantiateVariableFont)
 
+Method `ttx` can convert binary font files (.otf, .ttf, etc) to the TTX XML format and convert them back to binary format.
+
+Example of converting binary files to xml:
+
+```javascript
+const fs = require('node:fs');
+const { ttx } = require('@web-alchemy/fonttools');
+
+;(async () => {
+  const outputTtxBuffer = await ttx('./font.ttf') // also accpet `URL` and `Buffer`
+  await fs.promises.writeFile('./font.ttx', outputTtxBuffer)
+  
+  const outputOtxBuffer = await ttx('./font.otf')
+  await fs.promises.writeFile('./font.otx', outputOtxBuffer)
+})();
+```
+
+Example of converting xml files to binary files:
+
+```javascript
+const fs = require('node:fs');
+const { ttx } = require('@web-alchemy/fonttools');
+
+;(async () => {
+  const ttxBuffer = await ttx('./font.ttx')
+  await fs.promises.writeFile('./font.ttf', ttxBuffer)
+  
+  const otxBuffer = await ttx('./font.otx')
+  await fs.promises.writeFile('./font.otf', otxBuffer)
+})();
+```
+
+Example of converting xml files to binary files with encoding to `woff2`:
+
+```javascript
+const fs = require('node:fs');
+const { ttx } = require('@web-alchemy/fonttools');
+
+;(async () => {
+  const ttxBuffer = await ttx('./font.ttx', [
+    ['--flavor', 'woff2']
+  ])
+  await fs.promises.writeFile('./font.ttf', ttxBuffer)
+  
+  const otxBuffer = await ttx('./font.otx', [
+    ['--flavor', 'woff2']
+  ])
+  await fs.promises.writeFile('./font.otf', otxBuffer)
+})();
+```
 
 ## Limitations
 
