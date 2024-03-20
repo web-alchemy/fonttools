@@ -141,7 +141,7 @@ async function main() {
 main()
 ```
 
-This is port of [method `varLib.instancer.instantiateVariableFont`](https://fonttools.readthedocs.io/en/latest/varLib/instancer.html#fontTools.varLib.instancer.instantiateVariableFont)
+This is port of [method `varLib.instancer.instantiateVariableFont`](https://fonttools.readthedocs.io/en/latest/varLib/instancer.html#fontTools.varLib.instancer.instantiateVariableFont).
 
 Method `ttx` can convert binary font files (.otf, .ttf, etc) to the TTX XML format and convert them back to binary format.
 
@@ -167,11 +167,11 @@ const fs = require('node:fs');
 const { ttx } = require('@web-alchemy/fonttools');
 
 (async () => {
-  const ttxBuffer = await ttx('./font.ttx');
-  await fs.promises.writeFile('./font.ttf', ttxBuffer);
+  const ttfBuffer = await ttx('./font.ttx');
+  await fs.promises.writeFile('./font.ttf', ttfBuffer);
   
-  const otxBuffer = await ttx('./font.otx');
-  await fs.promises.writeFile('./font.otf', otxBuffer);
+  const otfBuffer = await ttx('./font.otx');
+  await fs.promises.writeFile('./font.otf', otfBuffer);
 })();
 ```
 
@@ -182,15 +182,15 @@ const fs = require('node:fs');
 const { ttx } = require('@web-alchemy/fonttools');
 
 (async () => {
-  const ttxBuffer = await ttx('./font.ttx', [
+  const ttfBuffer = await ttx('./font.ttx', [
     ['--flavor', 'woff2']
   ]);
-  await fs.promises.writeFile('./font.ttf', ttxBuffer);
+  await fs.promises.writeFile('./font.ttf', ttfBuffer);
   
-  const otxBuffer = await ttx('./font.otx', [
+  const otfBuffer = await ttx('./font.otx', [
     ['--flavor', 'woff2']
   ]);
-  await fs.promises.writeFile('./font.otf', otxBuffer);
+  await fs.promises.writeFile('./font.otf', otfBuffer);
 })();
 ```
 
