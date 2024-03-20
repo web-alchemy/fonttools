@@ -151,12 +151,12 @@ Example of converting binary files to xml:
 const fs = require('node:fs');
 const { ttx } = require('@web-alchemy/fonttools');
 
-;(async () => {
-  const outputTtxBuffer = await ttx('./font.ttf') // also accpet `URL` and `Buffer`
-  await fs.promises.writeFile('./font.ttx', outputTtxBuffer)
+(async () => {
+  const outputTtxBuffer = await ttx('./font.ttf'); // also accept `URL` and `Buffer`
+  await fs.promises.writeFile('./font.ttx', outputTtxBuffer);
   
-  const outputOtxBuffer = await ttx('./font.otf')
-  await fs.promises.writeFile('./font.otx', outputOtxBuffer)
+  const outputOtxBuffer = await ttx('./font.otf');
+  await fs.promises.writeFile('./font.otx', outputOtxBuffer);
 })();
 ```
 
@@ -166,12 +166,12 @@ Example of converting xml files to binary files:
 const fs = require('node:fs');
 const { ttx } = require('@web-alchemy/fonttools');
 
-;(async () => {
-  const ttxBuffer = await ttx('./font.ttx')
-  await fs.promises.writeFile('./font.ttf', ttxBuffer)
+(async () => {
+  const ttxBuffer = await ttx('./font.ttx');
+  await fs.promises.writeFile('./font.ttf', ttxBuffer);
   
-  const otxBuffer = await ttx('./font.otx')
-  await fs.promises.writeFile('./font.otf', otxBuffer)
+  const otxBuffer = await ttx('./font.otx');
+  await fs.promises.writeFile('./font.otf', otxBuffer);
 })();
 ```
 
@@ -181,16 +181,16 @@ Example of converting xml files to binary files with encoding to `woff2`:
 const fs = require('node:fs');
 const { ttx } = require('@web-alchemy/fonttools');
 
-;(async () => {
+(async () => {
   const ttxBuffer = await ttx('./font.ttx', [
     ['--flavor', 'woff2']
-  ])
-  await fs.promises.writeFile('./font.ttf', ttxBuffer)
+  ]);
+  await fs.promises.writeFile('./font.ttf', ttxBuffer);
   
   const otxBuffer = await ttx('./font.otx', [
     ['--flavor', 'woff2']
-  ])
-  await fs.promises.writeFile('./font.otf', otxBuffer)
+  ]);
+  await fs.promises.writeFile('./font.otf', otxBuffer);
 })();
 ```
 
