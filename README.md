@@ -185,12 +185,12 @@ const { ttx } = require('@web-alchemy/fonttools');
   const ttfBuffer = await ttx('./font.ttx', [
     ['--flavor', 'woff2']
   ]);
-  await fs.promises.writeFile('./font.ttf', ttfBuffer);
+  await fs.promises.writeFile('./font.woff2', ttfBuffer);
   
   const otfBuffer = await ttx('./font.otx', [
     ['--flavor', 'woff2']
   ]);
-  await fs.promises.writeFile('./font.otf', otfBuffer);
+  await fs.promises.writeFile('./font.woff2', otfBuffer);
 })();
 ```
 
