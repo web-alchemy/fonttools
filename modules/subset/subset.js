@@ -28,7 +28,7 @@ async function subset(inputFontBuffer, options) {
     const filePath = options[paramName]
     const file = new PyodideFile({ pyodide })
     const fileBuffer = await fs.promises.readFile(filePath)
-    file.upload(fileBuffer)
+    await file.upload(fileBuffer)
     options[filePath] = file.filename
     files.push(file)
   }
