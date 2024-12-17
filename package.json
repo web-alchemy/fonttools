@@ -16,7 +16,8 @@
     "postpublish": "git push origin --all; git push origin --tags",
     "postversion": "npm publish",
     "preversion": "npm test",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "postinstall": "node hooks/post-install.js"
   },
   "dependencies": {
     "pyodide": "^0.26.4"
