@@ -3,9 +3,11 @@ const { getPythonSubsetFunction } = require('./get-python-subset-function.js')
 
 function prepareOptions(options) {
   return Object.entries(options)
-    .map(([key, value]) => value === true ? [key] : [key, value])
-    .map(([key, value]) => key === '*' ? ['*']: [`--${key}`, value])
-    .map((entry) => entry.join('='))
+    .map(([key, value]) => {
+      if (key === "*") return "*"
+      if (value === true) return `--${key}`
+      return `--${key}=${value}`
+    })
 }
 
 async function subset(inputFontBuffer, options) {
