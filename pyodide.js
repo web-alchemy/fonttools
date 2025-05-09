@@ -4,7 +4,7 @@ const { loadPyodide } = require('pyodide')
 const { once } = require('./utils.js')
 
 async function installPackages(/**@type {import('pyodide').PyodideInterface}*/ pyodide) {
-  await pyodide.loadPackage(['Brotli', 'fonttools'], {
+  await pyodide.loadPackage(['Brotli', 'fonttools', 'lxml'], {
     messageCallback: () => {}
   })
 }
