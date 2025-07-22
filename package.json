@@ -31,11 +31,25 @@
   },
   "keywords": [
     "fonttools",
+    "font",
     "fonts",
+    "webfont",
+    "web-font",
+    "typography",
     "subset",
     "pyodide",
+    "python",
     "optimization",
-    "woff2"
+    "convert",
+    "opentype",
+    "truetype",
+    "ttf",
+    "woff",
+    "woff2",
+    "wasm",
+    "webassembly",
+    "cli",
+    "command-line"
   ],
   "bugs": {
     "url": "https://github.com/web-alchemy/fonttools/issues"
