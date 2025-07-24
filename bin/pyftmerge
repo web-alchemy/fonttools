@@ -2,7 +2,7 @@
 'use strict'
 
 const pkg = require('../package.json')
-const { main } = require('../modules/merge/cli.js')
+const { main } = require('../src/modules/merge/cli.js')
 
 const title = `${pkg.name}/pyftmerge`
 process.title = title
