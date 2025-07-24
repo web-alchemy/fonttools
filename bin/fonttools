@@ -2,7 +2,7 @@
 'use strict'
 
 const pkg = require('../package.json')
-const { main } = require('../modules/fonttools/cli.js')
+const { main } = require('../src/modules/fonttools/cli.js')
 
 const title = `${pkg.name}`
 process.title = title
