@@ -1,3 +1,4 @@
+const fs = require('fs')
 const { preparePyodide, PyodideFile } = require('../../pyodide.js')
 const { getPythonSubsetFunction } = require('./get-python-subset-function.js')
 
@@ -31,7 +32,7 @@ async function subset(inputFontBuffer, options) {
     const file = new PyodideFile({ pyodide })
     const fileBuffer = await fs.promises.readFile(filePath)
     await file.upload(fileBuffer)
-    options[filePath] = file.filename
+    options[paramName] = file.filename
     files.push(file)
   }
 
