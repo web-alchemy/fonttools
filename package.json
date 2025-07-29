@@ -1,7 +1,7 @@
 {
   "name": "@web-alchemy/fonttools",
-  "version": "1.3.4",
-  "main": "main.js",
+  "version": "1.4.0-0",
+  "main": "src/main.js",
   "bin": {
     "fonttools": "./bin/fonttools",
     "pyftsubset": "./bin/pyftsubset",
@@ -16,15 +16,22 @@
     "postpublish": "git push origin --all; git push origin --tags",
     "postversion": "npm publish",
     "preversion": "npm test",
+    "pretest": "npm run install-packages",
     "test": "echo \"No test specified\" && exit 0",
-    "postinstall": "node hooks/post-install.js"
+    "update-lock-file": "node src/scripts/update-lock-file.js",
+    "install-packages": "node src/scripts/install-packages.js"
   },
   "dependencies": {
-    "pyodide": "^0.27.1"
+    "pyodide": "^0.28.0"
   },
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "src",
+    "python_modules",
+    "pyodide-lock.json"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/web-alchemy/fonttools.git"
