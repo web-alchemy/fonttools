@@ -24,16 +24,16 @@ ttx <params>
 Also you can use this tool via [npx](https://docs.npmjs.com/cli/commands/npx):
 
 ```shell
-npx -p @web-alchemy/fonttools <params>
-npx -p @web-alchemy/fonttools pyftsubset <params>
-npx -p @web-alchemy/fonttools pyftmerge <params>
-npx -p @web-alchemy/fonttools ttx <params>
+npx --package=@web-alchemy/fonttools -- fonttools <params>
+npx --package=@web-alchemy/fonttools -- pyftsubset <params>
+npx --package=@web-alchemy/fonttools -- pyftmerge <params>
+npx --package=@web-alchemy/fonttools -- ttx <params>
 ```
 
 Example of converting `ttf` to `woff2`:
 
 ```shell
-npx -p @web-alchemy/fonttools pyftsubset \
+npx --package=@web-alchemy/fonttools -- pyftsubset \
   "./some/path/to/font.ttf" \
   "*" \  # keep all glyphs and just convert format
   --output-file="./some/path/to/font.woff2" \
@@ -43,7 +43,7 @@ npx -p @web-alchemy/fonttools pyftsubset \
 Example of converting `ttf` to `woff2` and subseting with text and unicodes options:
 
 ```shell
-npx -p @web-alchemy/fonttools pyftsubset \
+npx --package=@web-alchemy/fonttools -- pyftsubset \
   "./some/path/to/font.ttf" \
   --output-file="./some/path/to/font.woff2" \
   --flavor="woff2" \
@@ -57,7 +57,7 @@ npx -p @web-alchemy/fonttools pyftsubset \
 Example of [customizing variable font's axes](https://fonttools.readthedocs.io/en/latest/varLib/instancer.html):
 
 ```shell
-npx @web-alchemy/fonttools varLib.instancer \
+npx --package=@web-alchemy/fonttools -- fonttools varLib.instancer \
   "./src/font.woff2" \
   # decrease `wght` axis range
   wght=400:600 \

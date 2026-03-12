@@ -1,12 +1,19 @@
 const crypto = require('node:crypto')
 const fs = require('node:fs')
+const path = require('node:path')
 const { loadPyodide } = require('pyodide')
 const { once } = require('./utils.js')
 
-async function installPackages(/**@type {import('pyodide').PyodideInterface}*/ pyodide) {
-  await pyodide.loadPackage(['Brotli', 'fonttools', 'lxml'], {
-    messageCallback: () => {}
-  })
+async function createPyodide(options) {
+   const defaultOptions = {
+      packageCacheDir: path.join(__dirname, '..', 'python_modules')
+    }
+    const args = Object.assign({}, defaultOptions, options)
+    return await loadPyodide(args)
+}
+
+async function installPackages(/**@type {import('pyodide').PyodideInterface}*/ pyodide, options) {
+  await pyodide.loadPackage(['Brotli', 'fonttools', 'lxml'], options)
 }
 
 /**
@@ -14,8 +21,10 @@ async function installPackages(/**@type {import('pyodide').PyodideInterface}*/ p
  */
 const preparePyodide = once(
   async function(options) {
-    const pyodide = await loadPyodide(options)
-    await installPackages(pyodide)
+    const pyodide = await createPyodide(options)
+    await installPackages(pyodide, {
+      messageCallback: () => {}
+    })
     return pyodide
   }
 )
@@ -52,6 +61,8 @@ class PyodideFile {
 }
 
 module.exports = {
+  createPyodide,
   preparePyodide,
+  installPackages,
   PyodideFile
 }

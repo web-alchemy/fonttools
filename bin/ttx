@@ -2,7 +2,7 @@
 'use strict'
 
 const pkg = require('../package.json')
-const { main } = require('../modules/ttx/cli.js')
+const { main } = require('../src/modules/ttx/cli.js')
 
 const title = `${pkg.name}/ttx`
 process.title = title
