@@ -6,8 +6,7 @@ const { once } = require('./utils.js')
 
 async function createPyodide(options) {
    const defaultOptions = {
-      packageCacheDir: path.join(__dirname, '..', 'python_modules'),
-      lockFileURL: path.join(__dirname, '..', 'pyodide-lock.json'),
+      packageCacheDir: path.join(__dirname, '..', 'python_modules')
     }
     const args = Object.assign({}, defaultOptions, options)
     return await loadPyodide(args)
@@ -29,15 +28,6 @@ const preparePyodide = once(
     return pyodide
   }
 )
-
-async function updateLockFile() {
-  const pyodide = await loadPyodide()
-  await pyodide.loadPackage('micropip')
-  const micropip = pyodide.pyimport('micropip')
-  const content = micropip.freeze()
-  const prettyContent = JSON.stringify(JSON.parse(content), null, 2)
-  await fs.promises.writeFile('pyodide-lock.json', prettyContent)
-}
 
 class PyodideFile {
   static of(options) {
@@ -74,6 +64,5 @@ module.exports = {
   createPyodide,
   preparePyodide,
   installPackages,
-  updateLockFile,
   PyodideFile
 }
